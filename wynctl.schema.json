@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "default": "default"
+    },
+    "image": {
+      "type": "string"
+    },
+    "relativePath": {
+      "type": "string",
+      "default": ""
+    },
+    "sso":{
+      "type": "boolean",
+      "description": "Protects your routes with Single Sign On and OAuth2 protocol"
+    },
+    "cluster": {
+      "type": "object",
+      "description": "Cluster data",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "location":{
+          "type": "string",
+          "enum": ["francecentral", "eastus1", "us-west-2"]
+        },
+        "resourceGroup": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name", "host", "location"
+      ]
+    },
+    "services": {
+      "type": "object",
+      "description": "Exposed applications",
+      "patternProperties": {
+        "$": {
+          "$ref": "#/definitions/application"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "application": {
+      "type": "object",
+      "description": "application",
+      "properties": {
+        "nbUsers": {
+          "type": "number",
+          "description": "The expected number of users"
+        }
+      },
+      "required": [
+        "nbUsers"
+      ]
+    }
+  },
+  "required": ["namespace", "relativePath", "image"]
+}
